@@ -214,7 +214,7 @@ export default async function Home() {
               <Terminal className="h-4 w-4 text-emerald-300" /> curl it
             </p>
             <pre className="overflow-auto font-mono text-xs leading-relaxed text-slate-300">
-{`curl -s https://aurora-lens.vercel.app/api/mcp \\
+{`curl -s https://aurora-lens-ruddy.vercel.app/api/mcp \\
   -H 'content-type: application/json' \\
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/call",
        "params":{"name":"assess_storm","arguments":{}}}'`}
@@ -226,7 +226,7 @@ export default async function Home() {
 {`{
   "mcpServers": {
     "aurora-lens": {
-      "url": "https://aurora-lens.vercel.app/api/mcp",
+      "url": "https://aurora-lens-ruddy.vercel.app/api/mcp",
       "transport": "streamable-http"
     }
   }

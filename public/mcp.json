@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "aurora-lens": {
-      "url": "https://aurora-lens.vercel.app/api/mcp",
+      "url": "https://aurora-lens-ruddy.vercel.app/api/mcp",
       "transport": "streamable-http"
     }
   }

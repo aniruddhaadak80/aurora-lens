@@ -13,7 +13,7 @@ const body = Inter({
   subsets: ["latin"],
 });
 
-const SITE = "https://aurora-lens.vercel.app";
+const SITE = "https://aurora-lens-ruddy.vercel.app";
 const TITLE = "AuroraLens — Live Solar-Storm Ops Globe for Humans & Agents";
 const DESCRIPTION =
   "Real-time NOAA space weather + USGS seismic feeds on a 3D planet, a deterministic storm-risk engine with hash-chained audit seals, and an MCP agent interface. Zero API keys.";

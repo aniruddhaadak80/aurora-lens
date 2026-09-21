@@ -4,14 +4,14 @@
 
 **The Sun is shouting. AuroraLens listens — live solar-storm + seismic ops on a 3D planet, for humans *and* agents.**
 
-[![Live Demo](https://img.shields.io/badge/demo-live-22d3ee?style=for-the-badge)](https://aurora-lens.vercel.app)
+[![Live Demo](https://img.shields.io/badge/demo-live-22d3ee?style=for-the-badge)](https://aurora-lens-ruddy.vercel.app)
 [![License: MIT](https://img.shields.io/badge/license-MIT-34d399?style=for-the-badge)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/next.js-16-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
-[![Feeds: NOAA + USGS](https://img.shields.io/badge/feeds-NOAA_%2B_USGS-fbbf24?style=for-the-badge)](https://aurora-lens.vercel.app/api/health)
-[![MCP ready](https://img.shields.io/badge/MCP-JSON--RPC-a78bfa?style=for-the-badge)](https://aurora-lens.vercel.app/api/mcp)
+[![Feeds: NOAA + USGS](https://img.shields.io/badge/feeds-NOAA_%2B_USGS-fbbf24?style=for-the-badge)](https://aurora-lens-ruddy.vercel.app/api/health)
+[![MCP ready](https://img.shields.io/badge/MCP-JSON--RPC-a78bfa?style=for-the-badge)](https://aurora-lens-ruddy.vercel.app/api/mcp)
 [![CI](https://img.shields.io/github/actions/workflow/status/aniruddhaadak80/aurora-lens/ci.yml?style=for-the-badge&label=ci)](https://github.com/aniruddhaadak80/aurora-lens/actions)
 
-[Live App](https://aurora-lens.vercel.app) · [API](https://aurora-lens.vercel.app/api/health) · [MCP](https://aurora-lens.vercel.app/api/mcp) · [Issues](https://github.com/aniruddhaadak80/aurora-lens/issues)
+[Live App](https://aurora-lens-ruddy.vercel.app) · [API](https://aurora-lens-ruddy.vercel.app/api/health) · [MCP](https://aurora-lens-ruddy.vercel.app/api/mcp) · [Issues](https://github.com/aniruddhaadak80/aurora-lens/issues)
 
 </div>
 
@@ -166,29 +166,29 @@ Zero env vars. No keys. Works offline.
 
 ```bash
 # Health
-curl -s https://aurora-lens.vercel.app/api/health
+curl -s https://aurora-lens-ruddy.vercel.app/api/health
 
 # Live space weather (Kp · wind · flares · alerts)
-curl -s https://aurora-lens.vercel.app/api/space-weather | head -c 400
+curl -s https://aurora-lens-ruddy.vercel.app/api/space-weather | head -c 400
 
 # Quakes (M4.5+, 24h)
-curl -s https://aurora-lens.vercel.app/api/quakes | head -c 400
+curl -s https://aurora-lens-ruddy.vercel.app/api/quakes | head -c 400
 
 # Sealed storm assessment (score + factors + SHA-384 seal)
-curl -s https://aurora-lens.vercel.app/api/assessment | head -c 600
+curl -s https://aurora-lens-ruddy.vercel.app/api/assessment | head -c 600
 
 # MCP tools/list
-curl -s -X POST https://aurora-lens.vercel.app/api/mcp \
+curl -s -X POST https://aurora-lens-ruddy.vercel.app/api/mcp \
   -H 'content-type: application/json' \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}'
 
 # MCP assess_storm via live feeds
-curl -s -X POST https://aurora-lens.vercel.app/api/mcp \
+curl -s -X POST https://aurora-lens-ruddy.vercel.app/api/mcp \
   -H 'content-type: application/json' \
   -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"assess_storm","arguments":{}}}'
 
 # Verify a seal chain
-curl -s -X POST https://aurora-lens.vercel.app/api/verify \
+curl -s -X POST https://aurora-lens-ruddy.vercel.app/api/verify \
   -H 'content-type: application/json' \
   -d '{"records":[<sealed-assessment>]}'
 ```
@@ -199,7 +199,7 @@ curl -s -X POST https://aurora-lens.vercel.app/api/verify \
 {
   "mcpServers": {
     "aurora-lens": {
-      "url": "https://aurora-lens.vercel.app/api/mcp",
+      "url": "https://aurora-lens-ruddy.vercel.app/api/mcp",
       "transport": "streamable-http"
     }
   }
