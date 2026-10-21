@@ -127,6 +127,20 @@ export function assessStorm(input: EngineInput): StormAssessment {
   };
 }
 
+export function strongestFlare(flares: Array<{ classType: string; magnitude: number }>): string | null {
+  let best: string | null = null;
+  let bestPts = -1;
+  for (const f of flares.slice(0, 15)) {
+    const label = `${f.classType}${f.magnitude}`;
+    const pts = flareToPoints(label).points;
+    if (pts > bestPts) {
+      bestPts = pts;
+      best = label;
+    }
+  }
+  return best;
+}
+
 // ---------- Integrity: hash-chained audit seals ----------
 // seal = SHA-384( prevSeal ‖ canonicalJson(assessment) )
 // canonicalJson sorts object keys recursively so any client can replay the seal.
@@ -183,7 +197,10 @@ export async function verifyChain(records: SealedAssessment[]): Promise<{
     void _ctx;
     const recomputed = await sha384Hex(`${prevSeal}${canonicalJson(rest)}`);
     if (recomputed !== seal) return { ok: false, checked: i + 1, failedIndex: i };
-    if (i > 0 && prevSeal !== records[i - 1].seal) {
+    if (i === 0) {
+      const anchor = await dayGenesis(new Date((rest as { generatedAt?: string }).generatedAt ?? new Date()));
+      if (prevSeal !== anchor) return { ok: false, checked: i + 1, failedIndex: i };
+    } else if (prevSeal !== records[i - 1].seal) {
       return { ok: false, checked: i + 1, failedIndex: i };
     }
   }
