@@ -181,6 +181,14 @@ export async function verifyChain(records: SealedAssessment[]): Promise<{
     const { prevSeal, seal, canonical: _c, context: _ctx, ...rest } = r;
     void _c;
     void _ctx;
+    if (i === 0) {
+      // Anchor the first record to the daily genesis, otherwise the head of
+      // the chain could be replaced wholesale with a self-consistent forgery.
+      const expectedGenesis = await dayGenesis(new Date(r.generatedAt));
+      if (prevSeal !== expectedGenesis) {
+        return { ok: false, checked: 1, failedIndex: 0 };
+      }
+    }
     const recomputed = await sha384Hex(`${prevSeal}${canonicalJson(rest)}`);
     if (recomputed !== seal) return { ok: false, checked: i + 1, failedIndex: i };
     if (i > 0 && prevSeal !== records[i - 1].seal) {
@@ -188,4 +196,27 @@ export async function verifyChain(records: SealedAssessment[]): Promise<{
     }
   }
   return { ok: true, checked: records.length, failedIndex: null };
+}
+
+/**
+ * The strongest flare in a window of recent flares.
+ *
+ * Shared by the REST route and the MCP tool so both surfaces score the same
+ * live data identically.
+ */
+export function strongestFlare(
+  flares: Array<{ classType: string; magnitude: number }>,
+  window = 15
+): string | null {
+  let best: string | null = null;
+  let bestPts = -1;
+  for (const f of flares.slice(0, window)) {
+    const label = `${f.classType}${f.magnitude}`;
+    const pts = flareToPoints(label).points;
+    if (pts > bestPts) {
+      bestPts = pts;
+      best = label;
+    }
+  }
+  return best;
 }
