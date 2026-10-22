@@ -1,16 +1,35 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const display = Space_Grotesk({
+// Fonts are self-hosted (latin subsets of the upstream variable fonts) so that
+// `next build` never has to reach fonts.googleapis.com / fonts.gstatic.com.
+// `next/font/google` downloads at build time, and the build fails hard when
+// that download does not resolve, which made CI depend on network luck.
+const display = localFont({
+  src: [
+    {
+      path: "./fonts/space-grotesk-latin-variable.woff2",
+      weight: "300 700",
+      style: "normal",
+    },
+  ],
   variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
 });
 
-const body = Inter({
+const body = localFont({
+  src: [
+    {
+      path: "./fonts/inter-latin-variable.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+  ],
   variable: "--font-body",
-  subsets: ["latin"],
+  display: "swap",
+  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
 });
 
 const SITE = "https://aurora-lens-ruddy.vercel.app";
