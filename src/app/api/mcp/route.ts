@@ -2,7 +2,7 @@
 // Methods: initialize, tools/list, tools/call.
 // Tools: get_space_weather, get_quakes, assess_storm, verify_seal.
 
-import { assessStorm, sealAssessment, verifyChain } from "@/lib/engine";
+import { assessStorm, sealAssessment, strongestFlare, verifyChain } from "@/lib/engine";
 import { getQuakes, getSpaceWeather } from "@/lib/live";
 import type { McpToolDef } from "@/lib/types";
 
@@ -115,12 +115,11 @@ export async function POST(req: Request) {
           };
         } else {
           const [space, quakes] = await Promise.all([getSpaceWeather(), getQuakes()]);
-          const fl = space.flares[0];
           input = {
             kp: space.kp.kp,
             solarWindSpeed: space.wind.speed,
             bz: space.wind.bz,
-            maxFlare: fl ? `${fl.classType}${fl.magnitude}` : null,
+            maxFlare: strongestFlare(space.flares),
             alertCount: space.alerts.length,
             maxQuake: quakes.maxMag,
             source: space.source === "live" ? ("live" as const) : ("fallback" as const),
