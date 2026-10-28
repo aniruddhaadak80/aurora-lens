@@ -127,20 +127,6 @@ export function assessStorm(input: EngineInput): StormAssessment {
   };
 }
 
-export function strongestFlare(flares: Array<{ classType: string; magnitude: number }>): string | null {
-  let best: string | null = null;
-  let bestPts = -1;
-  for (const f of flares.slice(0, 15)) {
-    const label = `${f.classType}${f.magnitude}`;
-    const pts = flareToPoints(label).points;
-    if (pts > bestPts) {
-      bestPts = pts;
-      best = label;
-    }
-  }
-  return best;
-}
-
 // ---------- Integrity: hash-chained audit seals ----------
 // seal = SHA-384( prevSeal ‖ canonicalJson(assessment) )
 // canonicalJson sorts object keys recursively so any client can replay the seal.
